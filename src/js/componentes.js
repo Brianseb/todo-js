@@ -7,6 +7,7 @@ const txtInput = document.querySelector(".new-todo");
 const btnBorrar = document.querySelector(".clear-completed");
 const ulFiltros = document.querySelector(".filters"); // esto es para todos los filtros de los todo
 const anchorFiltros = document.querySelectorAll(".filtro");
+const cantidadPendientes = document.querySelector("strong");
 
 export const crearTodoHtml = (todo) => { // Esto es para crear las tareas y se agreguen en el html
     const htmlTodo = `
@@ -37,6 +38,8 @@ txtInput.addEventListener("keyup", (event) => { // Esto es para que reconosca cu
         crearTodoHtml(nuevoTodo);
 
         txtInput.value = "";
+
+        contador();
     }
 });
 
@@ -52,6 +55,8 @@ divTodoList.addEventListener("click", (event) => {
         todoList.eliminarTodo(todoID); // Para borrarlo de la memoria del array
         divTodoList.removeChild(todoElemento); // Para borarlo del HTML
     }
+
+    contador();
 });
 
 btnBorrar.addEventListener("click", () => { // simplemente que borre cuando hago click
@@ -69,10 +74,11 @@ btnBorrar.addEventListener("click", () => { // simplemente que borre cuando hago
             divTodoList.removeChild(divTodoList.children[i]);
         }
     }
+
+    contador();
 });
 
 ulFiltros.addEventListener("click", (event) => {
-    console.log(event.target);
     const filtro = event.target.text; // Esto me trae el nombre de los 3 elementos
     if (!filtro) { // Si no hay ningun filtro hace un return
         return;
@@ -99,3 +105,15 @@ ulFiltros.addEventListener("click", (event) => {
         }
     }
 });
+
+const contador = () => { // Esto lo hice yo para que sume las pendientes
+    let pendientes = 0;
+
+    for (const elementos of divTodoList.children) {
+        if (!elementos.classList.contains("completed")) {
+            pendientes++;
+        }
+    }
+
+    cantidadPendientes.innerText = pendientes;
+}

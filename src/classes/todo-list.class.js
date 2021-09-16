@@ -1,4 +1,5 @@
 import { Todo } from ".";
+import { contador } from "../js/componentes";
 
 export class TodoList {
 
